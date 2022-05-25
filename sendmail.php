@@ -8,51 +8,70 @@
     $reclamacao=$_POST["reclamacao"];
     $resultado=$_POST["resultado"];
 
-    $to = "richard@gpcabling.com.br";
-    $subject = "Formulario denuncia";
+    $mensagem= 'Esta mensagem foi enviada através do formulário<br><br>';
+    $mensagem.='<b>Nome: </b>'.$nome.'<br>';
+    $mensagem.='<b>Telefone:</b> '.$data_incidente.'<br>';
+    $mensagem.='<b>E-Mail:</b> '.$email.'<br>';
+    $mensagem.='<b>Deseja receber novidades:</b> '. $local.'<br>';
+    $mensagem.='<b>Data de envio:</b> '.$data_reclamacao.'<br>';
+    $mensagem.='<b>Mensagem:</b><br> '.$reclamacao;
 
-    // monta o e-mail na variavel $body
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/Exception.php';
+    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/PHPMailer.php';
+    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/SMTP.php';
+    require '/xampp/htdocs/HTML-Forms/vendor/autoload.php';
 
-    $body = "===================================" . "\n";
-    $body = $body . "FALE CONOSCO - TESTE COMPROVATIVO" . "\n";
-    $body = $body . "===================================" . "\n\n";
-    $body = $body . "Mensagem: " . $data_reclamacao . "\n\n";
-    $body = $body . "Mensagem: " . $nome . "\n\n";
-    $body = $body . "Mensagem: " . $email . "\n\n";
-    $body = $body . "Mensagem: " . $data_incidente . "\n\n";
-    $body = $body . "Mensagem: " . $local . "\n\n";
-    $body = $body . "Mensagem: " . $reclamacao . "\n\n";
-    $body = $body . "Mensagem: " . $resultado . "\n\n";
-    $body = $body . "===================================" . "\n";
-
-    // Always set content-type when sending HTML email
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-    // More headers
-    $headers .= 'From: contato@gpcabling.com.br' . "\r\n";
-
-    // envia o email
-
-    //mail($to,$subject,$body,$headers);
-
-
-    ini_set("smtp_port", "587");
-    ini_set("SMTP", "smtp.office365.com");
-   if(mail($to,$subject,$body,$headers))
-
+    // Instância da classe
+    $mail = new PHPMailer(true);
+    try
     {
-        echo "Mail Send Sucuceed";
+        // Configurações do servidor
 
+        $mail->isSMTP();        //Define o uso de SMTP no envio
+
+        $mail->SMTPAuth = true; //Habilita a autenticação SMTP
+
+        $mail->Username   = 'contato@gpcabling.com.br';
+
+        $mail->Password   = '*Copopp67';
+
+        // Criptografia do envio SSL também é aceito
+
+        $mail->SMTPSecure = 'tls';
+
+        // Informações específicadas pelo Google
+
+        $mail->Host = 'smtp.office365.com';
+
+        $mail->Port = 587;
+
+        // Define o remetente
+
+        $mail->setFrom('contato@gpcabling.com.br', 'Lucas Vilar');
+
+        // Define o destinatário
+
+        $mail->addAddress('richard@gpcabling.com.br', 'Richard Quintana');
+
+        // Conteúdo da mensagem
+
+        $mail->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
+
+        $mail->Subject = 'Teste formulário';
+
+        $mail->Body = $mensagem;
+
+        $mail->AltBody = $mensagem;
+
+        // Enviar
+
+        $mail->send();
+        echo 'A mensagem foi enviada!';
     }
-
-    else{
-
-        echo "Mail Send Failed";    
+    catch (Exception $e)
+    {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-
-    // redireciona para a página de obrigado
-
-    //header("location:http://localhost:8080/formlario.html");
-
 ?>
