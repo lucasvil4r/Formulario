@@ -1,38 +1,58 @@
 <?php
-// Criando nossas variáveis para guardar as informações do formulário
 
-$nome=$_POST["nome"];
-$email=$_POST["email"];
-$data_incidente=$_POST["data_incidente"];
-$local=$_POST["local"];
-$reclamacao=$_POST["reclamacao"];
-$resultado=$_POST["resultado"];
+    $data_reclamacao=$_POST["data_reclamacao"];
+    $nome=$_POST["nome"];
+    $email=$_POST["email"];
+    $data_incidente=$_POST["data_incidente"];
+    $local=$_POST["local"];
+    $reclamacao=$_POST["reclamacao"];
+    $resultado=$_POST["resultado"];
 
-//enviar
+    $to = "richard@gpcabling.com.br";
+    $subject = "Formulario denuncia";
 
-// emails para quem será enviado o formulário
-$emailenviar = "deposito@gpcabling.com.br";
-$destino = $emailenviar;
-$assunto = "Teste formulario";
+    // monta o e-mail na variavel $body
 
-// É necessário indicar que o formato do e-mail é html
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-    $headers .= 'From: $nome <$email>';
-//$headers .= "Bcc: $EmailPadrao\r\n";
+    $body = "===================================" . "\n";
+    $body = $body . "FALE CONOSCO - TESTE COMPROVATIVO" . "\n";
+    $body = $body . "===================================" . "\n\n";
+    $body = $body . "Mensagem: " . $data_reclamacao . "\n\n";
+    $body = $body . "Mensagem: " . $nome . "\n\n";
+    $body = $body . "Mensagem: " . $email . "\n\n";
+    $body = $body . "Mensagem: " . $data_incidente . "\n\n";
+    $body = $body . "Mensagem: " . $local . "\n\n";
+    $body = $body . "Mensagem: " . $reclamacao . "\n\n";
+    $body = $body . "Mensagem: " . $resultado . "\n\n";
+    $body = $body . "===================================" . "\n";
 
-    $enviaremail = mail($destino, $assunto, $headers);
+    // Always set content-type when sending HTML email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-  if($enviaremail){
+    // More headers
+    $headers .= 'From: contato@gpcabling.com.br' . "\r\n";
 
-    $mgm = "E-MAIL ENVIADO COM SUCESSO! <br> O link será enviado para o e-mail fornecido no formulário";
+    // envia o email
 
-    echo " <meta http-equiv='refresh' content='10;URL=contato.php'>";
-    
-    } else {
+    //mail($to,$subject,$body,$headers);
 
-    $mgm = "ERRO AO ENVIAR E-MAIL!";
-    echo "";
 
-  }
+    ini_set("smtp_port", "587");
+    ini_set("SMTP", "smtp.office365.com");
+   if(mail($to,$subject,$body,$headers))
+
+    {
+        echo "Mail Send Sucuceed";
+
+    }
+
+    else{
+
+        echo "Mail Send Failed";    
+    }
+
+    // redireciona para a página de obrigado
+
+    //header("location:http://localhost:8080/formlario.html");
+
 ?>
