@@ -1,77 +1,78 @@
 <?php
 
-    $data_reclamacao=$_POST["data_reclamacao"];
-    $nome=$_POST["nome"];
-    $email=$_POST["email"];
-    $data_incidente=$_POST["data_incidente"];
-    $local=$_POST["local"];
-    $reclamacao=$_POST["reclamacao"];
-    $resultado=$_POST["resultado"];
+$data_reclamacao=$_POST["data_reclamacao"];
+$nome=$_POST["nome"];
+$email=$_POST["email"];
+$data_incidente=$_POST["data_incidente"];
+$local=$_POST["local"];
+$reclamacao=$_POST["reclamacao"];
+$solucao=$_POST["resultado"];
 
-    $mensagem= 'Esta mensagem foi enviada através do formulário<br><br>';
-    $mensagem.='<b>Nome: </b>'.$nome.'<br>';
-    $mensagem.='<b>Telefone:</b> '.$data_incidente.'<br>';
-    $mensagem.='<b>E-Mail:</b> '.$email.'<br>';
-    $mensagem.='<b>Deseja receber novidades:</b> '. $local.'<br>';
-    $mensagem.='<b>Data de envio:</b> '.$data_reclamacao.'<br>';
-    $mensagem.='<b>Mensagem:</b><br> '.$reclamacao;
+$mensagem= 'Esta mensagem foi enviada através do formulário<br><br>';
+$mensagem.='<b>Nome: </b>'.$nome.'<br>';
+$mensagem.='<b>E-Mail: </b> '.$email.'<br>';
+$mensagem.='<b>Data incidente: </b> '.$data_incidente.'<br>';
+$mensagem.='<b>Local do incidente: </b> '. $local.'<br>';
+$mensagem.='<b>Reclamação: </b> '.$reclamacao.'<br>';
+$mensagem.='<b>Sugestão de solução: </b> '.$solucao.'<br>';
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/Exception.php';
-    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/PHPMailer.php';
-    require '/xampp/htdocs/HTML-Forms/phpmailer/phpmailer/src/SMTP.php';
-    require '/xampp/htdocs/HTML-Forms/vendor/autoload.php';
+require '/xampp/htdocs/HTML-Forms/vendor/autoload.php';
 
-    // Instância da classe
-    $mail = new PHPMailer(true);
-    try
-    {
-        // Configurações do servidor
+// Instância da classe
 
-        $mail->isSMTP();        //Define o uso de SMTP no envio
+$mail = new PHPMailer\PHPMailer\PHPMailer();
 
-        $mail->SMTPAuth = true; //Habilita a autenticação SMTP
+// Configurações do servidor
 
-        $mail->Username   = 'contato@gpcabling.com.br';
+    $mail->isSMTP();        //Define o uso de SMTP no envio
 
-        $mail->Password   = '*Copopp67';
+    $mail->SMTPAuth     = true; //Habilita a autenticação SMTP
 
-        // Criptografia do envio SSL também é aceito
+    $mail->Username     = 'contato@gpcabling.com.br';
 
-        $mail->SMTPSecure = 'tls';
+    $mail->Password     = '*Copopp67';
 
-        // Informações específicadas pelo Google
+    $mail->CharSet = 'UTF-8';    //DEFINE O CHARSET UTILIZADO
 
-        $mail->Host = 'smtp.office365.com';
+    // Criptografia do envio SSL também é aceito
 
-        $mail->Port = 587;
+    $mail->SMTPSecure = 'tls';
 
-        // Define o remetente
+    // Informações específicadas pelo Google
 
-        $mail->setFrom('contato@gpcabling.com.br', 'Lucas Vilar');
+    $mail->Host = 'smtp.office365.com';
 
-        // Define o destinatário
+    $mail->Port = 587;
 
-        $mail->addAddress('richard@gpcabling.com.br', 'Richard Quintana');
+    // Define o remetente
 
-        // Conteúdo da mensagem
+    $mail->setFrom('contato@gpcabling.com.br', 'TI GPCabling');
 
-        $mail->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
+    // Define o destinatário
 
-        $mail->Subject = 'Teste formulário';
+    $mail->addAddress('richard@gpcabling.com.br', 'Richard');
+    $mail->addAddress('lucas@gpcabling.com.br', 'Lucas Vilar');
 
-        $mail->Body = $mensagem;
+    // Conteúdo da mensagem
 
-        $mail->AltBody = $mensagem;
+    $mail->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
 
-        // Enviar
+    $mail->Subject   = utf8_decode('Formulário de Reclamação');
 
-        $mail->send();
-        echo 'A mensagem foi enviada!';
+    $mail->Body      = $mensagem;
+
+    $mail->SMTPDebug = 1;
+
+    $mail->Debugoutput = 'html';
+
+    $mail->setLanguage('pt');
+
+    // Enviar
+
+    if(!$mail->Send()) {
+        echo "Erro ao enviar o E-Mail";
+    }else{
+        echo "E-Mail enviado com sucesso!";
     }
-    catch (Exception $e)
-    {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
+
 ?>
