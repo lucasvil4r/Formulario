@@ -13,6 +13,8 @@ $hora_envio = date('H:i:s');
 
 // Compo E-mail
 
+// Substituindo as informações que foram coletada no fomulario para html que será disparado por email. 
+
 $htmlContent = file_get_contents("corpomail.html");
 $htmlContent = preg_replace('[{{nome}}]', $nome, $htmlContent);
 $htmlContent = preg_replace('[{{email}}]', $email, $htmlContent);
