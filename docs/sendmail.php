@@ -21,7 +21,7 @@ $htmlContent = preg_replace('[{{hora_envio}}]', $hora_envio, $htmlContent);
 
 // Instância da classe
 
-require '\xampp\htdocs\diretorio\Formulario_sendMail\vendor\autoload.php';
+require '\xampp\htdocs\diretorio\Formulario\vendor\autoload.php';
 
 $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
