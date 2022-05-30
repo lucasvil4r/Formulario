@@ -2,33 +2,26 @@
 
 use function Composer\Autoload\includeFile;
 
-$nome=$_POST["nome"];
+$nome=$_POST["name"];
 $email=$_POST["email"];
-$data_incidente=$_POST["data_incidente"];
-$local=$_POST["local"];
-$reclamacao=$_POST["reclamacao"];
-$solucao=$_POST["resultado"];
+$assunto=$_POST["assunto"];
+$message=$_POST["message"];
 $data_envio = date('d/m/Y');
 $hora_envio = date('H:i:s');
-
-// Compo E-mail
 
 // Substituindo as informações que foram coletada no fomulario para html que será disparado por email. 
 
 $htmlContent = file_get_contents("corpomail.html");
 $htmlContent = preg_replace('[{{nome}}]', $nome, $htmlContent);
 $htmlContent = preg_replace('[{{email}}]', $email, $htmlContent);
-$htmlContent = preg_replace('[{{data_incidente}}]', $data_incidente, $htmlContent);
-$htmlContent = preg_replace('[{{local}}]', $local, $htmlContent);
-$htmlContent = preg_replace('[{{reclamacao}}]', $reclamacao, $htmlContent);
-$htmlContent = preg_replace('[{{solucao}}]', $solucao, $htmlContent);
+$htmlContent = preg_replace('[{{assunto}}]', $assunto, $htmlContent);
+$htmlContent = preg_replace('[{{message}}]', $message, $htmlContent);
 $htmlContent = preg_replace('[{{data_envio}}]', $data_envio, $htmlContent);
 $htmlContent = preg_replace('[{{hora_envio}}]', $hora_envio, $htmlContent);
 
-
 // Instância da classe
 
-require '/xampp/htdocs/HTML-Forms/vendor/autoload.php';
+require '\xampp\htdocs\diretorio\Formulario_sendMail\vendor\autoload.php';
 
 $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
@@ -41,8 +34,6 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
     $mailer->Username     = 'contato@gpcabling.com.br';
 
     $mailer->Password     = '*Copopp67';
-
-    $mailer->CharSet = 'UTF-8';    //DEFINE O CHARSET UTILIZADO
 
     // Criptografia do envio SSL também é aceito
 
@@ -65,9 +56,11 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     // Conteúdo da mensagem
 
+    $mailer->CharSet = 'UTF-8';    //DEFINE O CHARSET UTILIZADO
+
     $mailer->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
 
-    $mailer->Subject   = utf8_decode('Formulário de Reclamação');
+    $mailer->Subject   = ('Formulário de Reclamação');
 
     $mailer->Debugoutput = 'html';
 
@@ -75,7 +68,11 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     $mailer->Body        = $htmlContent;
 
-    $mailer->setLanguage('pt');
+    $mailer->setLanguage('pt-BR');
+
+    // Redirecionando usuario para page de obrigado.
+
+    header("Location: http://localhost:8080/");
 
     // Enviar
 
@@ -84,5 +81,4 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
     }else{
         echo "E-Mail enviado com sucesso!";
     }
-    
 ?>
