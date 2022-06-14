@@ -31,9 +31,9 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     $mailer->SMTPAuth     = true; //Habilita a autenticação SMTP
 
-    $mailer->Username     = 'contato@gpcabling.com.br';
+    $mailer->Username     = 'email';
 
-    $mailer->Password     = '*Copopp67';
+    $mailer->Password     = '*passoword';
 
     // Criptografia do envio SSL também é aceito
 
