@@ -21,7 +21,7 @@ $htmlContent = preg_replace('[{{hora_envio}}]', $hora_envio, $htmlContent);
 
 // Instância da classe
 
-require '\xampp\htdocs\diretorio\Formulario\vendor\autoload.php';
+require '\xampp\htdocs\Formulario\vendor\autoload.php';
 
 $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
@@ -31,15 +31,15 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     $mailer->SMTPAuth     = true; //Habilita a autenticação SMTP
 
-    $mailer->Username     = 'email';
+    $mailer->Username     = 'contato@gpcabling.com.br';
 
-    $mailer->Password     = '*passoword';
+    $mailer->Password     = '*Copopp67';
 
     // Criptografia do envio SSL também é aceito
 
     $mailer->SMTPSecure = 'tls';
 
-    // Informações específicadas pelo Google
+    // Informações específicadas pelo office365
 
     $mailer->Host = 'smtp.office365.com';
 
@@ -52,7 +52,7 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
     // Define o destinatário
 
     //$mailer->addAddress('richard@gpcabling.com.br', 'Richard');
-    $mailer->addAddress('lucas@gpcabling.com.br', 'Lucas Vilar');
+    $mailer->addAddress('maiconmirandasantana@gmail.com', 'Maicon');
 
     // Conteúdo da mensagem
 
@@ -72,7 +72,7 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     // Redirecionando usuario para page de obrigado.
 
-    header("Location: http://localhost:8080/");
+    //header("Location: http://localhost:8080/");
 
     // Enviar
 
