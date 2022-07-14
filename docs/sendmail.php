@@ -47,7 +47,7 @@ $mailer = new PHPMailer\PHPMailer\PHPMailer();
 
     // Define o remetente
 
-    $mailer->setFrom('contato@gpcabling.com.br', 'TI GPCabling');
+    $mailer->setFrom('email do email que sera usado', 'UserName');
 
     // Define o destinatário
 
